@@ -1,18 +1,15 @@
-const getDataDB = (key) =>
-{
-    return JSON.parse(localStorage.getItem(key));
-}
+const KEY_PREFIX = "to-do-app-";
 
-
-
-const addToLocalDB = (key, newValue = [{}]) =>{
-const value = [...newValue];
-localStorage.setItem(key, JSON.stringify(value))
-
-
+const getDataDB = (keyWithoutPrefix) => {
+  const key = KEY_PREFIX + keyWithoutPrefix;
+  return JSON.parse(localStorage.getItem(key)) ?? [];
 };
 
+const addToLocalDB = (keyWithoutPrefix, newValue = [{}]) => {
+  const key = KEY_PREFIX + keyWithoutPrefix;
 
+  const value = [...getDataDB(keyWithoutPrefix), ...newValue];
+  localStorage.setItem(key, JSON.stringify(value));
+};
 
-
-export {addToLocalDB,getDataDB};
+export {addToLocalDB, getDataDB};
